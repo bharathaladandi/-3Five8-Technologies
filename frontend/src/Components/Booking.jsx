@@ -10,12 +10,12 @@ import {
     FormHelperText,
     Text
 } from '@chakra-ui/react';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { Center, Square, Circle } from '@chakra-ui/react'
 
+
+//Confing
 const FacilitiesOption = [
     {
         name: "Clubhouse",
@@ -53,19 +53,8 @@ export const Booking = () => {
             return;
         }
 
-        // const selectDate = new Date(date).toDateString();
-
-        const isAlreadyBooked = false;
-
-        if (isAlreadyBooked) {
-            setBookingStatus("Already Booked");
-            return;
-        }
-
         const selectSlotFacility = FacilitiesOption.find((e) => e.name === facility);
-
         if (!selectSlotFacility) {
-
             toast.error("Invalid Facility");
             setBookingStatus("Invalid Facility")
             return;
@@ -73,7 +62,6 @@ export const Booking = () => {
 
         const selectSlot = selectSlotFacility.slots.find((e) =>
             e.startTime <= startTime && e.endTime >= endTime);
-
         if (!selectSlot) {
             toast.error("Invalid Time Slot");
             setBookingStatus("Invalid Time Slot")
@@ -81,7 +69,6 @@ export const Booking = () => {
         }
 
         const hours = (new Date(`2023-01-01T${endTime}:00`).getTime() - new Date(`2023-01-01T${startTime}:00`).getTime()) / 3600000;
-
         const bookingAmount = selectSlot.price * hours;
 
         toast.success(`Booking Successful! Amount: Rs. ${bookingAmount}`, {
@@ -94,74 +81,34 @@ export const Booking = () => {
             progress: undefined,
         });
 
+
+
         const bookingDate = new Date(date).toDateString();
         const dates = new Date();
-        
+
         const bookingStartTime = dates.getHours()
-        + ':' + dates.getMinutes()
-        + ":" + dates.getSeconds();
+            + ':' + dates.getMinutes()
+            + ":" + dates.getSeconds();
 
 
         const bookingEndTime = dates.getHours()
-        + ':' + dates.getMinutes()
-        + ":" + dates.getSeconds();
+            + ':' + dates.getMinutes()
+            + ":" + dates.getSeconds();
 
         setBookingStartTime(`${bookingStartTime}`)
         setBookingEndTime(`${bookingEndTime}`)
         setBookingDate(`${bookingDate}`)
         setBookingAmount(`Rs.${bookingAmount}`)
         setBookingStatus(`Booking Successful !!`)
-        // setBookingAmount({bookingAmount})
 
-        // Clear form fields after successful booking
+
+        // Clear form fields after booking
         setFacility('');
         setDate('');
         setStartTime('');
         setEndTime('');
     }
 
-
-
-    // return (
-    //     <div>
-    //         <h1>Book Your Facility</h1>
-    //         {/* Top part */}
-    //         <div>
-    //             <label> Facility : </label>
-    //             <select value={facility} onChange={(e) => setFacility(e.target.value)}>
-    //                 <option value=""> Select Facility</option>
-    //                 {FacilitiesOption.map((e) => (
-    //                     <option key={e.name} value={e.name}> {e.name} </option>
-    //                 ))}
-    //             </select>
-    //         </div>
-
-    //         {/* Middle Part  */}
-    //         <div>
-    //             <label> Date :</label>
-    //             <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-    //         </div>
-    //         <div>
-    //             <label> Start Time :</label>
-    //             <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
-    //         </div>
-    //         <div>
-    //             <label> End Time :</label>
-    //             <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
-    //         </div>
-
-    //         <button onClick={handleBooking}>Book</button>
-
-    //         <div>
-    //             <strong>Status : </strong>
-    //             {bookingStatus}
-    //         </div>
-    //         <div>
-    //             <strong>Booking Amount : </strong>
-    //             {bookingAmount}
-    //         </div>
-    //     </div>
-    // );
 
     return (
         <div>
@@ -199,38 +146,38 @@ export const Booking = () => {
                         <Button colorScheme="blue" onClick={handleBooking}>
                             Book
                         </Button>
-                      
+
                     </Box>
                 </Center>
                 <Box>
                 </Box>
-                         {bookingStatus && (
-                            <Box mt={4}>
-                                <strong>Status:</strong> <Button>{bookingStatus} </Button>
-                            </Box>
-                        )}
-                         {bookingDates && (
-                            <Box mt={4}>
-                                <strong>Booking Date:</strong> <Button>{bookingDates} </Button>
-                            </Box>
-                        )}
-                        {bookingAmount && (
-                            <Box mt={4}>
-                                <strong>Booking Amount:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingAmount} </Button>
-                            </Box>
-                        )}
-                        {bookingStartTime &&(
-                            <Box mt={4}>
-                                <strong>Start Time:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingStartTime} </Button>
-                            </Box>
-                        )}
-                        {bookingEndTime &&(
-                            <Box mt={4}>
-                                <strong>End Time:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingEndTime} </Button>
-                            </Box>
-                        )}
-            
-                       
+                {bookingStatus && (
+                    <Box mt={4}>
+                        <strong>Status:</strong> <Button>{bookingStatus} </Button>
+                    </Box>
+                )}
+                {bookingDates && (
+                    <Box mt={4}>
+                        <strong>Booking Date:</strong> <Button>{bookingDates} </Button>
+                    </Box>
+                )}
+                {bookingAmount && (
+                    <Box mt={4}>
+                        <strong>Booking Amount:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingAmount} </Button>
+                    </Box>
+                )}
+                {bookingStartTime && (
+                    <Box mt={4}>
+                        <strong>Start Time:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingStartTime} </Button>
+                    </Box>
+                )}
+                {bookingEndTime && (
+                    <Box mt={4}>
+                        <strong>End Time:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingEndTime} </Button>
+                    </Box>
+                )}
+
+
             </Box>
         </div>
     )
