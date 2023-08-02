@@ -8,6 +8,7 @@ import {
     FormControl,
     FormLabel,
     FormHelperText,
+    Text
 } from '@chakra-ui/react';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -40,12 +41,15 @@ export const Booking = () => {
     const [date, setDate] = useState("");
     const [bookingStatus, setBookingStatus] = useState("");
     const [bookingAmount, setBookingAmount] = useState("");
+    const [bookingDates, setBookingDate] = useState("");
+    const [bookingStartTime, setBookingStartTime] = useState('');
+    const [bookingEndTime, setBookingEndTime] = useState("");
+
 
     const handleBooking = () => {
 
         if (!facility || !date || !startTime || !endTime) {
             toast.error("Please Fill All Fields");
-            // setBookingAmount("0");
             return;
         }
 
@@ -55,7 +59,6 @@ export const Booking = () => {
 
         if (isAlreadyBooked) {
             setBookingStatus("Already Booked");
-            // setBookingAmount("0");
             return;
         }
 
@@ -65,7 +68,6 @@ export const Booking = () => {
 
             toast.error("Invalid Facility");
             setBookingStatus("Invalid Facility")
-            // setBookingAmount("0");
             return;
         }
 
@@ -75,7 +77,6 @@ export const Booking = () => {
         if (!selectSlot) {
             toast.error("Invalid Time Slot");
             setBookingStatus("Invalid Time Slot")
-            // setBookingAmount("0");
             return;
         }
 
@@ -92,14 +93,29 @@ export const Booking = () => {
             draggable: true,
             progress: undefined,
         });
-        setDate(`${date}`)
+
+        const bookingDate = new Date(date).toDateString();
+        const dates = new Date();
+        
+        const bookingStartTime = dates.getHours()
+        + ':' + dates.getMinutes()
+        + ":" + dates.getSeconds();
+
+
+        const bookingEndTime = dates.getHours()
+        + ':' + dates.getMinutes()
+        + ":" + dates.getSeconds();
+
+        setBookingStartTime(`${bookingStartTime}`)
+        setBookingEndTime(`${bookingEndTime}`)
+        setBookingDate(`${bookingDate}`)
         setBookingAmount(`Rs.${bookingAmount}`)
-        setBookingStatus(`Booking Successful! Amount: Rs. ${bookingAmount}`)
+        setBookingStatus(`Booking Successful !!`)
         // setBookingAmount({bookingAmount})
 
         // Clear form fields after successful booking
         setFacility('');
-        // setDate('');
+        setDate('');
         setStartTime('');
         setEndTime('');
     }
@@ -188,21 +204,31 @@ export const Booking = () => {
                 </Center>
                 <Box>
                 </Box>
-                         {/* {bookingStatus && (
+                         {bookingStatus && (
                             <Box mt={4}>
-                                <strong>Status:</strong> {bookingStatus}
-                            </Box>
-                        )} */}
-                         {date && (
-                            <Box mt={4}>
-                                <strong>Booking Date:</strong> {date}
+                                <strong>Status:</strong> <Button>{bookingStatus} </Button>
                             </Box>
                         )}
-                        {/* {bookingAmount && (
+                         {bookingDates && (
                             <Box mt={4}>
-                                <strong>Booking Amount:</strong> {bookingAmount}
-                            </Box> */}
-                        {/* )} */}
+                                <strong>Booking Date:</strong> <Button>{bookingDates} </Button>
+                            </Box>
+                        )}
+                        {bookingAmount && (
+                            <Box mt={4}>
+                                <strong>Booking Amount:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingAmount} </Button>
+                            </Box>
+                        )}
+                        {bookingStartTime &&(
+                            <Box mt={4}>
+                                <strong>Start Time:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingStartTime} </Button>
+                            </Box>
+                        )}
+                        {bookingEndTime &&(
+                            <Box mt={4}>
+                                <strong>End Time:</strong><Button bg={"#edf2f7"} w={"50"}> {bookingEndTime} </Button>
+                            </Box>
+                        )}
             
                        
             </Box>
